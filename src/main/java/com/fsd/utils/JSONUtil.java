@@ -4,19 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fsd.controller.IndexController;
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Slf4j
 public class JSONUtil {
 
-  private static Logger logger = LoggerFactory.getLogger(IndexController.class);
   public static final ObjectMapper om = new ObjectMapper();
   //  private static Logger log = LoggerFactory.getLogger(JSONUtil.class);
 
@@ -24,7 +18,7 @@ public class JSONUtil {
     try {
       return JSONUtil.om.readValue(content, type);
     } catch (IOException e) {
-      logger.error("Failed to deserialize " + type + " from: " + content);
+      log.error("Failed to deserialize " + type + " from: " + content);
       return null;
     }
   }
@@ -33,7 +27,7 @@ public class JSONUtil {
     try {
       return JSONUtil.om.readValue(JSONUtil.getByFullName(content, name), type);
     } catch (IOException e) {
-      logger.error("Failed to deserialize " + type + " with name: " + name);
+      log.error("Failed to deserialize " + type + " with name: " + name);
       return null;
     }
   }
@@ -47,7 +41,7 @@ public class JSONUtil {
       }
       return j.asText();
     } catch (IOException e) {
-      logger.error("Failed to read value with name: " + fullName);
+      log.error("Failed to read value with name: " + fullName);
       return "";
     }
   }
@@ -56,7 +50,7 @@ public class JSONUtil {
     try {
       return JSONUtil.om.readTree(JSONUtil.om.writeValueAsBytes(o));
     } catch (IOException e) {
-      logger.warn("Failed to parse " + o.toString() + " to JsonNode.");
+      log.warn("Failed to parse " + o.toString() + " to JsonNode.");
       e.printStackTrace();
       return JsonNodeFactory.instance.nullNode();
     }
@@ -66,7 +60,7 @@ public class JSONUtil {
     try {
       return JSONUtil.om.readTree(s);
     } catch (IOException e) {
-      logger.warn("Failed to parse " + s + " to JsonNode.");
+      log.warn("Failed to parse " + s + " to JsonNode.");
       e.printStackTrace();
       return JsonNodeFactory.instance.nullNode();
     }
@@ -76,7 +70,7 @@ public class JSONUtil {
     try {
       return JSONUtil.om.writeValueAsString(o);
     } catch (JsonProcessingException e) {
-      logger.warn("Failed to write " + o + " as String.");
+      log.warn("Failed to write " + o + " as String.");
       e.printStackTrace();
       return "";
     }

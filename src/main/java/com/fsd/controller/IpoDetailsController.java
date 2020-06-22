@@ -8,9 +8,6 @@ import com.fsd.utils.ResponseBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +24,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("api/v1/ipodetails")
 public class IpoDetailsController {
-  
-  private static Logger logger = LoggerFactory.getLogger(IndexController.class);
-  
+
   @Autowired
   private IpoDetailsService ipoDetailsService;
 
@@ -79,7 +74,7 @@ public class IpoDetailsController {
   @ExceptionHandler(Exception.class)
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public ResponseEntity<ResponseBean> handleException(Exception exception) throws Exception {
-	logger.error(exception.getMessage(), exception);
+    log.error(exception.getMessage(), exception);
     return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(
         new ResponseBean(INTERNAL_SERVER_ERROR.value(), INTERNAL_SERVER_ERROR.getReasonPhrase()).error(exception.getMessage()));
   }
